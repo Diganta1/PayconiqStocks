@@ -27,13 +27,16 @@ import io.swagger.annotations.ApiModelProperty;
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 
 public class Stock {
+	
+	private static final String VALIDATION="Name should have atleast 3 characters";
+	private static final String FORMULA="(" + "SELECT s.id " + "FROM PRICE s " + "WHERE s.STOCK_ID   = ID " + "ORDER BY s.timestamp DESC " + "LIMIT 1" + ")";
 
 	@Id
 	@GeneratedValue
 	private Integer id;
 
-	@Size(min = 3, message = "Name should have atleast 3 characters")
-	@ApiModelProperty(notes = "Name should have atleast 3 characters")
+	@Size(min = 3, message = VALIDATION)
+	@ApiModelProperty(notes = VALIDATION)
 	@NotNull
 	@Column(unique = true)
 	private String name;
@@ -44,8 +47,7 @@ public class Stock {
 	private List<Price> prices;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinFormula("(" + "SELECT s.id " + "FROM PRICE s " + "WHERE s.STOCK_ID   = ID " + "ORDER BY s.timestamp DESC "
-			+ "LIMIT 1" + ")")
+	@JoinFormula(FORMULA)
 	private Price latestPrice;
 
 	public Price getLatestPrice() {

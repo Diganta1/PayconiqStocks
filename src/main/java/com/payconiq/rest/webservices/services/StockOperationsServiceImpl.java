@@ -28,7 +28,10 @@ import com.payconiq.rest.webservices.repository.StockRepository;
 public class StockOperationsServiceImpl implements StockOperationsService {
 
 	private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(StockOperationsServiceImpl.class);
-
+	private static final String ERROR = "Stock {} does not exists in the db";
+	private static final String INFO_FETCHALL="searched id(S):{} and name :{} from db";
+	private static final String INFO_ADD="Saved Item id:{} and name :{} into db";
+	
 	@Autowired
 	private StockRepository stockRepository;
 
@@ -39,7 +42,7 @@ public class StockOperationsServiceImpl implements StockOperationsService {
 	public <T> Optional<StockResponse> findStock(int stockId) {
 		Optional<Stock> stock = stockRepository.findById(stockId);
 		if (!stock.isPresent()) {
-			LOGGER.error("Stock {} does not exists in the db", stockId);
+			LOGGER.error(ERROR, stockId);
 			throw new StockNotFoundException(String.format("Stock %s does not exists", stockId));
 		}
 		return Optional.of(new StockResponse(stock.get().getId(), stock.get().getName(), stock.get().getLatestPrice()));
@@ -50,7 +53,7 @@ public class StockOperationsServiceImpl implements StockOperationsService {
 		List<StockResponse> stockResponse = new ArrayList<StockResponse>();
 		stockRepository.findAll().forEach(stock -> {
 			stockResponse.add(new StockResponse(stock.getId(), stock.getName(), stock.getLatestPrice()));
-			LOGGER.info("searched id(S):{} and name :{} from db",stock.getId(),stock.getName());
+			LOGGER.info(INFO_FETCHALL,stock.getId(),stock.getName());
 		});
 		
 		return stockResponse;
@@ -63,7 +66,7 @@ public class StockOperationsServiceImpl implements StockOperationsService {
 			price.setStock(stock);
 		}
 		Stock savedStock = stockRepository.save(stock);
-		LOGGER.info("Saved Item id:{} and name :{} into db",savedStock.getId(),savedStock.getName());
+		LOGGER.info(INFO_ADD,savedStock.getId(),savedStock.getName());
 		return savedStock.getId();
 	}
 
@@ -71,7 +74,7 @@ public class StockOperationsServiceImpl implements StockOperationsService {
 	public void updateStockPrice(int stockId, double newPrice) {
 		Optional<Stock> stock = stockRepository.findById(stockId);
 		if (!stock.isPresent()) {
-			LOGGER.error("Stock {} does not exists in the db", stockId);
+			LOGGER.error(ERROR, stockId);
 			throw new StockNotFoundException(String.format("Stock %s does not exists", stockId));
 		}
 		Price price = new Price();

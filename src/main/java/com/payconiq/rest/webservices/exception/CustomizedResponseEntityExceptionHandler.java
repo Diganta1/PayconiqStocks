@@ -15,6 +15,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 @RestController
 public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
+	
+	private static final String VALIDATION_FAILED="Validation Failed";
 
 	@ExceptionHandler(Exception.class)
 	public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
@@ -34,7 +36,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), "Validation Failed",
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), VALIDATION_FAILED,
 				ex.getBindingResult().toString());
 		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}

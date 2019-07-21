@@ -56,22 +56,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    web.ignoring().antMatchers("/h2-console/**");
 	}
 	
-	/*
-	 * public SecurityConfig() { super();
-	 * SecurityContextHolder.setStrategyName(SecurityContextHolder.
-	 * MODE_INHERITABLETHREADLOCAL); }
-	 * 
-	 * @Override protected void configure(AuthenticationManagerBuilder auth) throws
-	 * Exception { auth.jdbcAuthentication().
-	 * auth.inMemoryAuthentication().withUser("admin").password(encoder().encode(
-	 * "adminPass")).roles("ADMIN").and()
-	 * .withUser("user").password(encoder().encode("userPass")).roles("USER"); }
-	 * 
-	 * @Bean public PasswordEncoder encoder() { return new BCryptPasswordEncoder();
-	 * }
-	 * 
-	 * @Override protected void configure(HttpSecurity http) throws Exception { http
-	 * .antMatcher("/jpa/**") .authorizeRequests() .anyRequest().hasRole("ADMIN")
-	 * .and() .httpBasic(); }
-	 */
 }
