@@ -26,10 +26,9 @@ import com.payconiq.rest.webservices.repository.StockRepository;
  */
 @Service
 public class StockOperationsServiceImpl implements StockOperationsService {
-	
-	
+
 	private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(StockOperationsServiceImpl.class);
-	
+
 	@Autowired
 	private StockRepository stockRepository;
 
@@ -49,19 +48,22 @@ public class StockOperationsServiceImpl implements StockOperationsService {
 	@Override
 	public List<StockResponse> findAllStocks() {
 		List<StockResponse> stockResponse = new ArrayList<StockResponse>();
-	     stockRepository.findAll().forEach(stock -> {
+		stockRepository.findAll().forEach(stock -> {
 			stockResponse.add(new StockResponse(stock.getId(), stock.getName(), stock.getLatestPrice()));
-	     });
+			LOGGER.info("searched id(S):{} and name :{} from db",stock.getId(),stock.getName());
+		});
+		
 		return stockResponse;
 	}
 
 	@Override
 	public int addStock(Stock stock) {
-		for(Price price : stock.getPrices()) {
+		for (Price price : stock.getPrices()) {
 			price.setTimestamp(new Timestamp(new DateTime().getMillis()));
 			price.setStock(stock);
 		}
 		Stock savedStock = stockRepository.save(stock);
+		LOGGER.info("Saved Item id:{} and name :{} into db",savedStock.getId(),savedStock.getName());
 		return savedStock.getId();
 	}
 
@@ -69,6 +71,7 @@ public class StockOperationsServiceImpl implements StockOperationsService {
 	public void updateStockPrice(int stockId, double newPrice) {
 		Optional<Stock> stock = stockRepository.findById(stockId);
 		if (!stock.isPresent()) {
+			LOGGER.error("Stock {} does not exists in the db", stockId);
 			throw new StockNotFoundException(String.format("Stock %s does not exists", stockId));
 		}
 		Price price = new Price();

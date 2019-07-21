@@ -41,15 +41,15 @@ public class StockController {
 	}
 
 	@PostMapping("/api/stocks")
-	public ResponseEntity<String> addStock(@Valid @RequestBody Stock stock)  {
+	public ResponseEntity<String> addStock(@Valid @RequestBody Stock stock) {
 		int stockId = stockOperationsService.addStock(stock);
-		return new ResponseEntity<String>(String.format("Stock %s is created successfully", stockId), HttpStatus.CREATED);
+		return new ResponseEntity<String>(String.format("Stock %s is created successfully", stockId),
+				HttpStatus.CREATED);
 	}
 
-
 	@PutMapping("/api/stocks/{stockid}/prices")
-	public ResponseEntity<Object> updateStockPrice(@PathVariable(name = "stockid") int stockId, @RequestBody PriceRequest price)
-			throws StockNotFoundException {
+	public ResponseEntity<Object> updateStockPrice(@PathVariable(name = "stockid") int stockId,
+			@RequestBody PriceRequest price) throws StockNotFoundException {
 		stockOperationsService.updateStockPrice(stockId, price.getPrice());
 		return new ResponseEntity<Object>(String.format("Stock %s is updated successfully", stockId), HttpStatus.OK);
 	}

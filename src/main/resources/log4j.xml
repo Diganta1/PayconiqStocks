@@ -1,24 +1,35 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
-<log4j:configuration debug="true"
-	xmlns:log4j='http://jakarta.apache.org/log4j/'>
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+	<Properties>
+		<Property name="applogLevel">INFO</Property>
+		<Property name="nonAppLogLevel">INFO</Property>
+		<Property name="log-path">logs</Property>
+	</Properties>
+	<Appenders>
+		<Console name="CONSOLE" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</Console>
+		<RollingFile name="file" fileName="${log-path}"
+			filePattern="${log-path}-%d{dd-MM-yyyy}-%i">
+			<PatternLayout
+				pattern="%d{dd-MM-yyyy} %d{HH:mm:ss.SSS} %-5level %logger{25} [%t{20}] %M : %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+				<SizeBasedTriggeringPolicy size="20 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="10" />
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Logger name="STOCK_LOG" level="${applogLevel}"
+			additivity="false">
+			<AppenderRef ref="file" />
+		</Logger>
+		<Root level="${applogLevel}">
+			<AppenderRef ref="CONSOLE" />
 
-	<appender name="file"
-		class="org.apache.log4j.RollingFileAppender">
-		<param name="append" value="false" />
-		<param name="maxFileSize" value="10KB" />
-		<param name="maxBackupIndex" value="5" />
-		<param name="file"
-			value=/etc/logs/SystemOut.log" />
-		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern"
-				value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />
-		</layout>
-	</appender>
-
-	<root>
-		<level value="ERROR" />
-		<appender-ref ref="file" />
-	</root>
-
-</log4j:configuration>
+		</Root>
+	</Loggers>
+</Configuration>

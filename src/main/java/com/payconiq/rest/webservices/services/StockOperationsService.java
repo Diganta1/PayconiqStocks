@@ -7,6 +7,7 @@ import com.payconiq.rest.webservices.model.Stock;
 import com.payconiq.rest.webservices.model.StockResponse;
 
 public interface StockOperationsService {
+	
 	public <T> Optional<StockResponse> findStock(int stockId);
 
 	public List<StockResponse> findAllStocks();

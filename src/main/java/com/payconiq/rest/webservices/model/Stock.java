@@ -24,8 +24,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(value = "Stock Details", description = "Contains all details of a Stock")
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 
 public class Stock {
 
@@ -40,7 +39,7 @@ public class Stock {
 	private String name;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "stock")
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	@NotEmpty
 	private List<Price> prices;
 
