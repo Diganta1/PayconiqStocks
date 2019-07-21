@@ -39,13 +39,13 @@ public class StockOperationsServiceImpl implements StockOperationsService {
 	private PriceRepository priceRepository;
 
 	@Override
-	public <T> Optional<StockResponse> findStock(int stockId) {
+	public StockResponse findStock(int stockId) {
 		Optional<Stock> stock = stockRepository.findById(stockId);
 		if (!stock.isPresent()) {
 			LOGGER.error(ERROR, stockId);
 			throw new StockNotFoundException(String.format("Stock %s does not exists", stockId));
 		}
-		return Optional.of(new StockResponse(stock.get().getId(), stock.get().getName(), stock.get().getLatestPrice()));
+		return new StockResponse(stock.get().getId(), stock.get().getName(), stock.get().getLatestPrice());
 	}
 
 	@Override

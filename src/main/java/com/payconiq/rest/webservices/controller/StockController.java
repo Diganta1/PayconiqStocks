@@ -37,9 +37,13 @@ public class StockController {
 
 	@GetMapping("/api/stocks/{id}")
 	public StockResponse getStockById(@PathVariable int id) throws StockNotFoundException {
-		return stockOperationsService.findStock(id).get();
+		return stockOperationsService.findStock(id);
 	}
 
+	/**
+	 * @param stock
+	 * @return
+	 */
 	@PostMapping("/api/stocks")
 	public ResponseEntity<String> addStock(@Valid @RequestBody Stock stock) {
 		int stockId = stockOperationsService.addStock(stock);
