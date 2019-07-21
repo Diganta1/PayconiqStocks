@@ -18,9 +18,7 @@ import com.payconiq.rest.webservices.exception.StockNotFoundException;
 import com.payconiq.rest.webservices.model.PriceRequest;
 import com.payconiq.rest.webservices.model.Stock;
 import com.payconiq.rest.webservices.model.StockResponse;
-import com.payconiq.rest.webservices.model.User;
 import com.payconiq.rest.webservices.services.StockOperationsService;
-import com.payconiq.rest.webservices.services.UserService;
 
 /**
  * Controller method is used to get the rest resource for stock object
@@ -31,14 +29,6 @@ public class StockController {
 
 	@Autowired
 	private StockOperationsService stockOperationsService;
-
-	@Autowired
-	private UserService userService;
-
-	@GetMapping("/api/users")
-	public List<User> listUser() {
-		return userService.findAll();
-	}
 
 	@GetMapping("/api/stocks")
 	public List<StockResponse> getAllStocks() {

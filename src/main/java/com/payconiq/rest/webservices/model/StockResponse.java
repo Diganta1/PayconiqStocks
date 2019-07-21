@@ -10,6 +10,7 @@ public class StockResponse {
 
 	public StockResponse(Integer id, String name, Price latestPrice) {
 		super();
+		
 		this.id = id;
 		this.name = name;
 		this.latestPrice = latestPrice;

@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -23,6 +25,8 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value = "Stock Details", description = "Contains all details of a Stock")
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
+
 public class Stock {
 
 	@Id
@@ -32,10 +36,12 @@ public class Stock {
 	@Size(min = 3, message = "Name should have atleast 3 characters")
 	@ApiModelProperty(notes = "Name should have atleast 3 characters")
 	@NotNull
+	@Column(unique = true)
 	private String name;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "stock")
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
+	@NotEmpty
 	private List<Price> prices;
 
 	@ManyToOne(fetch = FetchType.LAZY)

@@ -1,6 +1,5 @@
 package com.payconiq.rest.webservices.services;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,7 +14,7 @@ import com.payconiq.rest.webservices.model.User;
 import com.payconiq.rest.webservices.repository.UserRepository;
 
 @Service(value = "userService")
-public class UserServiceImpl implements UserDetailsService, UserService {
+public class UserServiceImpl implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userDao;
@@ -31,13 +30,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
 	private List<SimpleGrantedAuthority> getAuthority() {
 		return Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
-	}
-
-	@Override
-	public List<User> findAll() {
-		List<User> list = new ArrayList<>();
-		userDao.findAll().iterator().forEachRemaining(list::add);
-		return list;
 	}
 
 }
