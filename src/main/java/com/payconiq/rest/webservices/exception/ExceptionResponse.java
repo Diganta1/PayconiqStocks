@@ -2,16 +2,19 @@ package com.payconiq.rest.webservices.exception;
 
 import java.util.Date;
 
+/**
+ * response model
+ * @author diganta
+ *
+ */
 public class ExceptionResponse {
 	private Date timestamp;
 	private String message;
-	private String details;
 
-	public ExceptionResponse(Date timestamp, String message, String details) {
+	public ExceptionResponse(Date timestamp, String message) {
 		super();
 		this.timestamp = timestamp;
 		this.message = message;
-		this.details = details;
 	}
 
 	public Date getTimestamp() {
@@ -22,8 +25,5 @@ public class ExceptionResponse {
 		return message;
 	}
 
-	public String getDetails() {
-		return details;
-	}
 
 }

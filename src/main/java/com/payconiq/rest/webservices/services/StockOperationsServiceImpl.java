@@ -6,7 +6,6 @@ package com.payconiq.rest.webservices.services;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.joda.time.DateTime;
 import org.slf4j.LoggerFactory;
@@ -21,6 +20,7 @@ import com.payconiq.rest.webservices.repository.PriceRepository;
 import com.payconiq.rest.webservices.repository.StockRepository;
 
 /**
+ * Implementation class for Stock operation service 
  * @author diganta
  *
  */
@@ -28,7 +28,6 @@ import com.payconiq.rest.webservices.repository.StockRepository;
 public class StockOperationsServiceImpl implements StockOperationsService {
 
 	private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(StockOperationsServiceImpl.class);
-	private static final String ERROR = "Stock {} does not exists in the db";
 	private static final String INFO_FETCHALL="searched id(S):{} and name :{} from db";
 	private static final String INFO_ADD="Saved Item id:{} and name :{} into db";
 	
@@ -38,16 +37,19 @@ public class StockOperationsServiceImpl implements StockOperationsService {
 	@Autowired
 	private PriceRepository priceRepository;
 
+	/**
+	 *find all stocks wrt IDs
+	 */
 	@Override
 	public StockResponse findStock(int stockId) {
-		Optional<Stock> stock = stockRepository.findById(stockId);
-		if (!stock.isPresent()) {
-			LOGGER.error(ERROR, stockId);
-			throw new StockNotFoundException(String.format("Stock %s does not exists", stockId));
-		}
-		return new StockResponse(stock.get().getId(), stock.get().getName(), stock.get().getLatestPrice());
+		Stock stock = stockRepository.findById(stockId)
+				.orElseThrow(() -> new StockNotFoundException(String.format("Stock %s does not exists", stockId)));
+		return new StockResponse(stock.getId(), stock.getName(), stock.getLatestPrice());
 	}
 
+	/**
+	 *Find all stocks
+	 */
 	@Override
 	public List<StockResponse> findAllStocks() {
 		List<StockResponse> stockResponse = new ArrayList<StockResponse>();
@@ -59,28 +61,31 @@ public class StockOperationsServiceImpl implements StockOperationsService {
 		return stockResponse;
 	}
 
+	/**
+	 *register new stock
+	 */
 	@Override
-	public int addStock(Stock stock) {
+	public Stock addStock(Stock stock) {
 		for (Price price : stock.getPrices()) {
 			price.setTimestamp(new Timestamp(new DateTime().getMillis()));
 			price.setStock(stock);
 		}
 		Stock savedStock = stockRepository.save(stock);
 		LOGGER.info(INFO_ADD,savedStock.getId(),savedStock.getName());
-		return savedStock.getId();
+		return savedStock;
 	}
 
+	/**
+	 *add latest price to the stock
+	 */
 	@Override
 	public void updateStockPrice(int stockId, double newPrice) {
-		Optional<Stock> stock = stockRepository.findById(stockId);
-		if (!stock.isPresent()) {
-			LOGGER.error(ERROR, stockId);
-			throw new StockNotFoundException(String.format("Stock %s does not exists", stockId));
-		}
+		Stock stock = stockRepository.findById(stockId)
+				.orElseThrow(() -> new StockNotFoundException(String.format("Stock %s does not exists", stockId)));
 		Price price = new Price();
 		price.setPrice(newPrice);
 		price.setTimestamp(new Timestamp(new DateTime().getMillis()));
-		price.setStock(stock.get());
+		price.setStock(stock);
 		priceRepository.save(price);
 	}
 }

@@ -11,12 +11,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.JoinFormula;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import io.swagger.annotations.ApiModel;
@@ -37,17 +38,18 @@ public class Stock {
 
 	@Size(min = 3, message = VALIDATION)
 	@ApiModelProperty(notes = VALIDATION)
-	@NotNull
+	@NotBlank(message="Stock name")
 	@Column(unique = true)
 	private String name;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "stock")
 	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-	@NotEmpty
+	@NotEmpty (message="Stock amount")
 	private List<Price> prices;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinFormula(FORMULA)
+	@JsonIgnore
 	private Price latestPrice;
 
 	public Price getLatestPrice() {

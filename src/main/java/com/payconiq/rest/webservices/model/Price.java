@@ -8,9 +8,17 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * Price model
+ * @author diganta
+ *
+ */
 @Entity
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Price {
@@ -19,6 +27,7 @@ public class Price {
 	@GeneratedValue
 	private Integer id;
 	@NotNull
+	@NumberFormat(style = Style.NUMBER)
 	private Double price;
 	private Timestamp timestamp;
 
@@ -34,6 +43,7 @@ public class Price {
 
 	}
 
+	
 	public Price(Integer id, Double price, Timestamp timestamp) {
 		super();
 		this.id = id;

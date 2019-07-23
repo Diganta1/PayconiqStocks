@@ -13,6 +13,11 @@ import org.springframework.stereotype.Service;
 import com.payconiq.rest.webservices.model.User;
 import com.payconiq.rest.webservices.repository.UserRepository;
 
+/**
+ * security model
+ * @author diganta
+ *
+ */
 @Service(value = "userService")
 public class UserServiceImpl implements UserDetailsService {
 	
