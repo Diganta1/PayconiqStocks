@@ -35,9 +35,7 @@ public class Price {
 	@JsonIgnore
 	private Stock stock;
 
-	/*
-	 * @OneToMany(mappedBy="price") private List<TimeUpdate> times;
-	 */
+	
 
 	public Price() {
 

@@ -21,17 +21,17 @@ import com.payconiq.rest.webservices.repository.UserRepository;
 @Service(value = "userService")
 public class UserServiceImpl implements UserDetailsService {
 	
-	private static final String INVALID_USERNAME_OR_PASSWORD="Invalid username or password.";
+	private static final String INVALID_CREDENTIALS="Invalid credential.";
 	private static final String ROLE_ADMIN="ROLE_ADMIN";
 	
 
 	@Autowired
 	private UserRepository userDao;
-
+	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
 		User user = userDao.findByUsername(userId);
 		if (user == null) {
-			throw new UsernameNotFoundException(INVALID_USERNAME_OR_PASSWORD);
+			throw new UsernameNotFoundException(INVALID_CREDENTIALS);
 		}
 		return new org.springframework.security.core.userdetails.User(String.valueOf(user.getId()), user.getPassword(),
 				getAuthority());

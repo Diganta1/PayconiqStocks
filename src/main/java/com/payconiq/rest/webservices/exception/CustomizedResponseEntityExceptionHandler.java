@@ -32,14 +32,13 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	
 
 	@ExceptionHandler(Exception.class)
-	public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
-		ex.printStackTrace();
+	public final ResponseEntity<Object> handleAllExceptions(Exception ex) {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage());
 		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@ExceptionHandler(StockNotFoundException.class)
-	public final ResponseEntity<Object> handleUserNotFoundException(StockNotFoundException ex, WebRequest request) {
+	public final ResponseEntity<Object> handleUserNotFoundException(StockNotFoundException ex) {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage());
 		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
 	}
@@ -56,7 +55,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	}
 
 	@ExceptionHandler({ ConstraintViolationException.class })
-	public ResponseEntity<Object> handleConstraintViolation(ConstraintViolationException ex, WebRequest request) {
+	public ResponseEntity<Object> handleConstraintViolation(ConstraintViolationException ex) {
 		List<String> errors = new ArrayList<String>();
 		for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
 			errors.add(violation.getRootBeanClass().getName() + " " + violation.getPropertyPath() + ": "
@@ -66,7 +65,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}
 	@ExceptionHandler({ org.springframework.dao.DataIntegrityViolationException.class })
-	public ResponseEntity<Object> handleHibernateConstraintViolation(org.springframework.dao.DataIntegrityViolationException ex, WebRequest request) {
+	public ResponseEntity<Object> handleHibernateConstraintViolation(org.springframework.dao.DataIntegrityViolationException ex) {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), "Cannot insert the same record details");
 		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}

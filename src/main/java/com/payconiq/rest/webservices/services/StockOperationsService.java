@@ -12,7 +12,7 @@ import com.payconiq.rest.webservices.model.StockResponse;
  */
 public interface StockOperationsService {
 	
-	public <T> StockResponse findStock(int stockId);
+	public StockResponse findStock(int stockId);
 
 	public List<StockResponse> findAllStocks();
 
