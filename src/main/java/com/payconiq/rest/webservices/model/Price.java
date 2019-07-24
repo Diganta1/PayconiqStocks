@@ -28,7 +28,7 @@ public class Price {
 	private Integer id;
 	@NotNull
 	@NumberFormat(style = Style.NUMBER)
-	private Double price;
+	private Double prices;
 	private Timestamp timestamp;
 
 	@ManyToOne
@@ -42,10 +42,10 @@ public class Price {
 	}
 
 	
-	public Price(Integer id, Double price, Timestamp timestamp) {
+	public Price(Integer id, Double prices, Timestamp timestamp) {
 		super();
 		this.id = id;
-		this.price = price;
+		this.prices = prices;
 		this.timestamp = timestamp;
 
 	}
@@ -68,13 +68,13 @@ public class Price {
 		this.id = id;
 	}
 
-	public Double getprice() {
-		return price;
+	public Double getprices() {
+		return prices;
 	}
 
-	public void setPrice(Double price) {
+	public void setPrices(Double prices) {
 
-		this.price = price;
+		this.prices = prices;
 	}
 
 	public Stock getStock() {
@@ -87,7 +87,7 @@ public class Price {
 
 	@Override
 	public String toString() {
-		return String.format("Price [id=%s, price=%s , timestamp=%s]", id, price, timestamp);
+		return String.format("Price [id=%s, price=%s , timestamp=%s]", id, prices, timestamp);
 	}
 
 }

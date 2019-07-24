@@ -83,7 +83,7 @@ public class StockOperationsServiceImpl implements StockOperationsService {
 		Stock stock = stockRepository.findById(stockId)
 				.orElseThrow(() -> new StockNotFoundException(String.format("Stock %s does not exists", stockId)));
 		Price price = new Price();
-		price.setPrice(newPrice);
+		price.setPrices(newPrice);
 		price.setTimestamp(new Timestamp(new DateTime().getMillis()));
 		price.setStock(stock);
 		priceRepository.save(price);
