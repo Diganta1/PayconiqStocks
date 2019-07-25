@@ -1,4 +1,4 @@
-package com.payconiq.rest.webservices;
+package com.payconiq.rest.webservices.controller;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;

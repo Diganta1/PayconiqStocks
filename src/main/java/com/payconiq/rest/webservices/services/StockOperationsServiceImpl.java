@@ -52,7 +52,7 @@ public class StockOperationsServiceImpl implements StockOperationsService {
 	 */
 	@Override
 	public List<StockResponse> findAllStocks() {
-		List<StockResponse> stockResponse = new ArrayList<StockResponse>();
+		List<StockResponse> stockResponse = new ArrayList<>();
 		stockRepository.findAll().forEach(stock -> {
 			stockResponse.add(new StockResponse(stock.getId(), stock.getName(), stock.getLatestPrice()));
 			LOGGER.info(INFO_FETCHALL,stock.getId(),stock.getName());

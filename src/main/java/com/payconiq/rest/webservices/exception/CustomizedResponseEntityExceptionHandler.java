@@ -65,7 +65,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}
 	@ExceptionHandler({ org.springframework.dao.DataIntegrityViolationException.class })
-	public ResponseEntity<Object> handleHibernateConstraintViolation(org.springframework.dao.DataIntegrityViolationException ex) {
+	public ResponseEntity<Object> handleHibernateConstraintViolation() {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), "Cannot insert the same record details");
 		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}
