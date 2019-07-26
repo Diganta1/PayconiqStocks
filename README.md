@@ -44,11 +44,11 @@ Applied OAuth2 Security, hence just Pass the authentication user and validate it
    
    "Body"      form-data
    
-   Key                value
+      Key                value
    
-   Username           digi
-   password           password
-   grant_type         password
+     Username           digi
+     password           password
+     grant_type         password
    
   # POST: localhost:8080/oauth/token
    
