@@ -27,6 +27,10 @@ insert into price values(11004,200.09,TO_DATE(sysdate, 'yyyy-mm-dd hh24:mi:ss'),
 
 INSERT INTO tbl_user (id, username, password, salary, age) VALUES (1, 'digi',   '$2a$04$I9Q2sDc4QGGg5WNTLmsz0.fvGv3OjoZyj81PrSFyGOqMphqfS2qKu', 3456, 33);
 
+# Swagger URL:
+http://localhost:8080/swagger-ui.html#/stock-controller
+http://localhost:8080/v2/api-docs
+
 # (Try everything with postman tool)
 
 # Crud Service operations
