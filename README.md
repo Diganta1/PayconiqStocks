@@ -42,13 +42,13 @@ Applied OAuth2 Security, hence just Pass the authentication user and validate it
    "Headers" 
    Accept : Application/json
    
-   "Body" . form-data
+   "Body"      form-data
    
-   Key .                 value
+   Key                value
    
-   Username             Digi
-   password             password
-   grant_type           password
+   Username           digi
+   password           password
+   grant_type         password
    
   # POST: localhost:8080/oauth/token
    
