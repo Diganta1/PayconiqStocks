@@ -29,6 +29,7 @@ INSERT INTO tbl_user (id, username, password, salary, age) VALUES (1, 'digi',   
 
 # Swagger URL:
 http://localhost:8080/swagger-ui.html#/stock-controller
+
 http://localhost:8080/v2/api-docs
 
 # (Try everything with postman tool)
